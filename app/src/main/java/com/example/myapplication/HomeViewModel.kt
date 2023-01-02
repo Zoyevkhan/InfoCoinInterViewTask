@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel() : ViewModel() {
     var products: MutableLiveData<UIState<List<Product>>> = MutableLiveData()
     var detailsProduct: MutableLiveData<UIState<Product>> = MutableLiveData()
+    var homeRepo:HomeRepo = HomeRepo(RetrofitFactory.getRetrofit())
     lateinit var exceptionHandlerForProducts: CoroutineExceptionHandler
     lateinit var exceptionHandlerForDetails: CoroutineExceptionHandler
 
@@ -21,7 +22,7 @@ class HomeViewModel() : ViewModel() {
     private fun loadProducts() {
         products.value = UIState.isLoading()
         viewModelScope.launch(exceptionHandlerForProducts) {
-            var response = HomeRepo(RetrofitFactory.getRetrofit()).getProductResponse()
+            var response = homeRepo.getProductResponse()
             if (response.isSuccessful) {
                 products.value = UIState.Success(response.body()?.products)
             } else {
@@ -34,7 +35,7 @@ class HomeViewModel() : ViewModel() {
         detailsProduct.value = UIState.isLoading()
         viewModelScope.launch(exceptionHandlerForDetails) {
             var response =
-                HomeRepo(RetrofitFactory.getRetrofit()).getDetailsProductResponse(productId)
+                homeRepo.getDetailsProductResponse(productId)
             if (response.isSuccessful) {
                 detailsProduct.value = UIState.Success(response.body())
             } else {
