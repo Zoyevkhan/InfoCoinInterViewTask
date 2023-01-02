@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.example.myapplication.Product"></import>
+        <import type="com.example.myapplication.ListingListener"></import>
+        <variable
+            name="product"
+            type="Product" />
+        <variable
+            name="callback"
+            type="ListingListener" />
+
+
+    </data>
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                app:url="@{product.thumbnail}"
+                android:layout_height="400dp">
+            </ImageView>
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"></ProgressBar>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/detailsContainer"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:text="@{product.title}"
+                android:textStyle="bold"
+                android:textSize="20sp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:text="@{String.valueOf(product.price)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:text="@{String.valueOf(product.discountPercentage)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:text="@{product.description}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+            <com.google.android.material.button.MaterialButton
+                android:layout_margin="20dp"
+                android:text="Add"
+                android:textAllCaps="false"
+                android:onClick="@{()->callback.onDetailsItemClicked(product)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.button.MaterialButton>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
+</layout>
